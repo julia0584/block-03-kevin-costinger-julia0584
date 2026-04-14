@@ -11,7 +11,7 @@
  *     he will do is, bring you back to the field where
  *     you made a mistake. But who knows? Maybe he can
  *     even provide some excellent User experience?
- *     (+5 Bonus points available)
+ *     (+5 Bonus points available
  *
  *     These are the rules for the form validation:
  *      - Date is valid, if it's not empty.
