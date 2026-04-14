@@ -45,8 +45,59 @@ let sumExpenses = 0; //Use this variable to keep the sum up to date.
 
 function submitForm(e){
     //TODO: Prevent the default behavior of the submit button.
+    e.preventDefault();
     //TODO: Validate the form. If everything is fine, add the expense to the tracker and reset the form.
+    let date = document.getElementById("date").value;
+    let amount = parseFloat(document.getElementById("amount").value);
+    let expense = document.getElementById("expense").value;
+
+    if (isEmpty(date)) {
+        document.getElementById("date").focus();
+        return;
+    }
+    else if (isNaN(amount) || amount<0.01) {
+        document.getElementById("amount").focus();
+        return;
+    }
+    else if (expense.length<3) {
+        document.getElementById("expense").focus();
+        return;
+    }
+
+    let row = document.createElement("tr");
+    row.innerHTML = `<td>${date}</td> <td>${formatEuro(amount)}</td> <td>${expense}</td> <td><button type=delete>Delete</button></td>`;
+    row.dataset.amount = amount;
+
+    let table = document.getElementById("expenses");
+    table.appendChild(row);
+
+
+    sumExpenses = sumExpenses + amount;
+    let sum = document.getElementById("expenseSum");
+    sum.innerHTML = formatEuro(sumExpenses);
+
+    e.target.reset();
+
 }
+
+function deleteButton(e) {
+    if(e.target.tagName === "BUTTON"){
+        let deleteRow = e.target.parentElement.parentElement;
+        deleteRow.remove();
+
+        sumExpenses -= parseFloat(deleteRow.dataset.amount);
+        let sum = document.getElementById("expenseSum");
+        sum.innerHTML = formatEuro(sumExpenses);
+    }
+}
+
+let table = document.getElementById("expenses");
+table.addEventListener("click", deleteButton); //Events lösen Funktion aus!
+
+let form = document.querySelector("form")
+form.addEventListener("submit",submitForm)
+
+
 
 
 /*****************************
